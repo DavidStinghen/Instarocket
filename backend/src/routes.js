@@ -16,4 +16,7 @@ const upload = multer(uploadConfig)
  */
 routes.post('/posts', upload.single('image'), PostController.store)
 
+// rota para listar os posts
+routes.get('/posts', PostController.index)
+
 module.exports = routes
