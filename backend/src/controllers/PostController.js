@@ -2,11 +2,13 @@ const Post = require('../models/Post')
 
 module.exports = {
 
+    // metodo para listar todos os posts por ordem de data de criação
     async index (req, res) {
-        const post = await Post.find()
+        const posts = await Post.find().sort('-createdAt')
+        return res.json(posts)
     },
 
-    //rota para adicionar novos posts com imagens
+    //metodo para adicionar novos posts com imagens
     async store (req, res) {
         const { author, place, description, hashtags } = req.body
         const { filename: image } = req.file
