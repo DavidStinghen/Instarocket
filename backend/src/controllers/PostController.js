@@ -6,8 +6,18 @@ module.exports = {
         const post = await Post.find()
     },
 
+    //rota para adicionar novos posts com imagens
     async store (req, res) {
-        const posts = await Post.create()
+        const { author, place, description, hashtags } = req.body
+        const { filename: image } = req.file
+
+        const posts = await Post.create({
+            author,
+            place,
+            description,
+            hashtags,
+            image
+        })
         return res.json(posts)
     },
 
