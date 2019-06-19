@@ -16,6 +16,7 @@ module.exports = {
      * definindo o nome da imagem que aparece na url como nome.jpg
      * usado sharp para redimensionar a imagem
      * usado fs para deletar a imagem de tamanho original
+     * usado io para enviar uma mensagem para o frontend quando for feita um post
     */
     async store (req, res) {
         const { author, place, description, hashtags } = req.body
@@ -31,14 +32,17 @@ module.exports = {
 
         fs.unlinkSync(req.file.path)
 
-        const posts = await Post.create({
+        const post = await Post.create({
             author,
             place,
             description,
             hashtags,
             image: filename
         })
-        return res.json(posts)
+
+        req.io,emit('post', post)
+
+        return res.json(post)
     },
 
     
